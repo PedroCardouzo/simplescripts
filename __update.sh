@@ -12,6 +12,6 @@ while getopts 'd' OPT; do
 done
 
 git pull origin master
-if [[ $DEV != 'true' ]]; then
+if [[ $DEV == 'true' ]]; then
 	echo 'no dev branch available yet'
 fi
