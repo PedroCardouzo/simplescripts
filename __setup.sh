@@ -1,7 +1,5 @@
 #!/bin/bash
 
-KEY='ab2a28c774652e5abadef18906926c7187c20518'
-
 function __create_or_update_files {	
 
 	if "$2" == 'purge-git'; then
@@ -13,7 +11,7 @@ function __create_or_update_files {
 			./__update.sh "$2";
 			cd ../;
 		else
-			git clone "https://""$KEY""@github.wdf.sap.corp/PedroCardouzo/""$1"".git";
+			git clone "https://""$KEY""@github.wdf.sap.corp/I866021/""$1"".git";
 		fi
 	fi
 }
@@ -64,7 +62,14 @@ fi
 
 
 if is_lower_version 1; then 
-	cat >~/git_cert/git.wdf.cert <<EOL
+	CERTIFICATE_FOLDER=~/git_cert
+	CERTIFICATE_FILE='"$CERTIFICATE_FOLDER"/sap-git.crt'
+	if ! [ -f "$CERTIFICATE_FILE" ]; then
+		mkdir -p "$CERTIFICATE_FOLDER"
+		touch "$CERTIFICATE_FILE"
+	fi
+
+	cat >"$CERTIFICATE_FILE" <<EOL
 -----BEGIN CERTIFICATE-----
 MIIGBDCCA+ygAwIBAgIDAa82MA0GCSqGSIb3DQEBCwUAMEQxCzAJBgNVBAYTAkRF
 MREwDwYDVQQHDAhXYWxsZG9yZjEMMAoGA1UECgwDU0FQMRQwEgYDVQQDDAtTQVBO
@@ -102,9 +107,11 @@ cpaqHFoSlEC68d3YlWGg/c31ouUjRST/udV10eCacK7KsDbwzu+9fiFYqU/1PTWN
 -----END CERTIFICATE-----
 EOL
 
-	git config --global http.sslCAInfo ~/git_cert/git.wdf.cert
+	git config --global http.sslCAInfo "$CERTIFICATE_FILE"
 
 fi
 
+
 __create_or_update_files "simplescripts" "$ARG";
 __create_or_update_files "xml_decoder" "$ARG";
+__create_or_update_files "xml_extractor" "$ARG";
