@@ -11,7 +11,10 @@ while getopts 'd' OPT; do
   esac
 done
 
-git pull origin master
+
 if [[ $DEV == 'true' ]]; then
-	echo 'no dev branch available yet'
+	echo 'no dev branch available yet: pulling from master'
+	git pull origin master
+else
+	git pull origin master
 fi
