@@ -2,7 +2,7 @@
 
 function __create_or_update_files {	
 
-	if "$2" == 'purge-git'; then
+	if [ "$2" == 'purge-git' ]; then
 		rm -R "$1"
 	else
 		if [ -d "$1" ]; then
