@@ -48,6 +48,7 @@ while getopts 'hdp' OPT; do
     'd') ARG='-d';
        ;;
     'p') ARG='purge-git'
+ 	   ;;
     '?') printf "illegal option: -%s\n" "$0" >&2
        echo "$usage" >&2
        exit -1
